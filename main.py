@@ -7,7 +7,7 @@ import pandas as pd
 df = pd.read_csv('./us-colleges-and-universities.csv', encoding='UTF-8', on_bad_lines='skip', delimiter=';')
 
 # Creating the dataframe to convert into a csv file
-final_df = pd.DataFrame(columns=['State', 'School', 'Abbreviation', 'Type', 'Email', 'Size', 'Website', 'Notes'])
+final_df = pd.DataFrame(columns=['State', 'School', 'Abbreviation', 'Type', 'Email', 'Size', 'Website', 'Address', 'Notes'])
 
 # Setting shared columns to be the same in the final dataframe
 final_df['State'] = df['STATE']
@@ -24,6 +24,9 @@ final_df['Type'] = df['TYPE'].map(school_type)
 # Creating the abbreviation column by splitting the name column and taking the first letter of each word
 articles = ['the', 'of', 'and', 'at', 'a', 'an', '&']
 final_df['Abbreviation'] = [''.join(j[0] for j in x.split() if j.lower() not in articles) for x in final_df['School']]
+
+# Creating the address column
+final_df['Address'] = df['ADDRESS'].str.title() + ', ' + df['CITY'].str.title() + ', ' + df['STATE'].str.upper() + ' ' + df['ZIP'].astype(str)
 
 # Creating a final csv file
 final_df.to_csv('./final.csv')
