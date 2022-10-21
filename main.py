@@ -12,7 +12,7 @@ final_df = pd.DataFrame(columns=['State', 'School', 'Abbreviation', 'Type', 'Ema
 # Setting shared columns to be the same in the final dataframe
 final_df['State'] = df['STATE']
 final_df['School'] = df['NAME'].str.title()
-final_df['Size'] = df['TOT_ENROLL']
+final_df['Size'] = df['TOT_ENROLL'].replace(-999, 'N/A')
 
 # Creating a column of websites with hyperlink functionality
 final_df['Website'] = ['=HYPERLINK("https://'+x+'","LINK")' for x in df['WEBSITE']]
