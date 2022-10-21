@@ -22,7 +22,8 @@ school_type = {1: 'Community', 2: 'Private', 3: 'Public'}
 final_df['Type'] = df['TYPE'].map(school_type)
 
 # Creating the abbreviation column by splitting the name column and taking the first letter of each word
-final_df['Abbreviation'] = [''.join(j[0] for j in x.split()) for x in final_df['School']]
+articles = ['the', 'of', 'and', 'at', 'a', 'an', '&']
+final_df['Abbreviation'] = [''.join(j[0] for j in x.split() if j.lower() not in articles) for x in final_df['School']]
 
 # Creating a final csv file
 final_df.to_csv('./final.csv')
