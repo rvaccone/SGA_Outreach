@@ -1,7 +1,8 @@
 import pandas as pd
+from usp.tree import sitemap_tree_for_homepage
 
 # Wants the information as such:
-# State, School, Abbreviation, Type (public/private/community), email, size, website (preferably with LINK hyperlink), notes (if using personal email or issue with contact methods)
+# State, School, Abbreviation, Type (public/private/community), SGA email, size, SGA website (preferably with LINK hyperlink), notes (if using personal email or issue with contact methods)
 
 # Importing the initial csv file
 df = pd.read_csv('./us-colleges-and-universities.csv', encoding='UTF-8', on_bad_lines='skip', delimiter=';')
@@ -15,7 +16,8 @@ final_df['School'] = df['NAME'].str.title()
 final_df['Size'] = df['TOT_ENROLL'].replace(-999, 'N/A')
 
 # Creating a column of websites with hyperlink functionality
-final_df['Website'] = ['=HYPERLINK("https://www.'+x.replace('https://', '').replace('www.','')+'","LINK")' for x in df['WEBSITE']]
+# final_df['Website'] = ['=HYPERLINK("https://www.'+x.replace('https://', '').replace('www.','')+'","LINK")' for x in df['WEBSITE']]
+# The website needs to be the SGA website, not the school's website
 
 # Creating the type column by mapping the number in the original csv file to a string
 school_type = {1: 'Community', 2: 'Private', 3: 'Public'}
